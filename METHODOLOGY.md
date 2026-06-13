@@ -1,58 +1,35 @@
 # Methodology
 
-This project applies unsupervised learning to a public credit card customer dataset. The main objective is to identify interpretable customer segments based on financial behavior, not to predict a target variable.
+This document summarizes the workflow implemented in the Jupyter notebook. The purpose is to keep the repository understandable without adding results that are not supported by the notebook.
 
-## Dataset
+## 1. Data loading
 
-The dataset contains **8,950 customers** and **18 variables**, including balance, purchases, cash advances, credit limit, payments, and payment behavior indicators.
+The notebook loads the public credit card customer dataset from `data/Customer_Data.csv`. The repository includes the dataset to make the project reproducible.
 
-## Analytical workflow
+## 2. Exploratory analysis
 
-1. **Data loading and inspection**  
-   The dataset is loaded from `data/Customer_Data.csv` using a portable path so the project can run from a GitHub repository.
+The notebook reviews the structure of the dataset, missing values, distributions, and relationships between numerical variables. The figures used in the repository are extracted from the notebook outputs.
 
-2. **Exploratory data analysis**  
-   Descriptive statistics, missing values, distributions, outliers, and correlation patterns are examined to understand customer behavior before modeling.
+## 3. Preprocessing
 
-3. **Preprocessing**  
-   The customer identifier is removed, missing numeric values are imputed, and the variables are standardized. Standardization is necessary because the variables have very different units and magnitudes.
+The workflow removes the customer identifier from the modeling matrix and standardizes numerical variables before applying clustering algorithms. Standardization is necessary because the original variables have different units and scales.
 
-4. **K-Means clustering**  
-   K-Means is used as the main segmentation model. The project evaluates the number of clusters using inertia and silhouette score.
+## 4. K-Means clustering
 
-5. **PCA visualization**  
-   Principal Component Analysis is used to project the high-dimensional customer space into two or three components for visualization. The clustering is performed on the standardized variables, while PCA is mainly used for interpretation and plotting.
+K-Means is used as the baseline segmentation model. The notebook evaluates different values of `k` using the elbow method and silhouette analysis, then builds the final segmentation model.
 
-6. **Gaussian Mixture Models**  
-   GMM is included as an alternative probabilistic segmentation method. This makes the analysis broader than a simple K-Means-only notebook.
+## 5. PCA visualization
 
-7. **Exploratory Factor Analysis**  
-   Factor analysis is used as an additional dimensionality reduction approach to compare latent behavioral structures with PCA.
+Principal Component Analysis is used to project the high-dimensional customer data into a lower-dimensional space for visualization. PCA is used for interpretation and plotting, not as a replacement for the full modeling workflow unless explicitly evaluated in the notebook.
 
-## Main segment interpretation
+## 6. Gaussian Mixture Models
 
-The K-Means solution with three clusters produced the following behavioral profiles:
+The notebook also applies Gaussian Mixture Models as a probabilistic clustering alternative. This allows the segmentation to be compared with a model that does not assign customers only by nearest centroid.
 
-| Cluster | Segment interpretation | Customers | Share |
-|---:|---|---:|---:|
-| 0 | Active purchase customers | 1275 | 14.25% |
-| 1 | Low-activity customers | 6114 | 68.31% |
-| 2 | Cash-advance oriented customers | 1561 | 17.44% |
+## 7. Factor Analysis
 
+Exploratory Factor Analysis is included to represent latent behavioral dimensions and compare clustering in factor space.
 
-## Model validation summary
+## Transparency note
 
-| Metric | Value |
-|---|---:|
-| Silhouette score (sample=1000) | 0.2402 |
-| Calinski-Harabasz index | 1605.03 |
-| Davies-Bouldin index | 1.592 |
-| PCA variance PC1 | 0.273 |
-| PCA variance PC2 | 0.2031 |
-| PCA variance PC3 | 0.0881 |
-| PCA variance PC1-PC3 | 0.5642 |
-
-
-## Originality of this project
-
-The dataset is public, so other notebooks may use the same source. The originality of this project comes from the structure of the analysis, the extended interpretations, the comparison between clustering methods, the inclusion of PCA and factor analysis, and the documentation of each table and graph.
+All graphical assets in `assets/figures/` come from the notebook embedded outputs. The repository does not include externally generated figures or synthetic charts.

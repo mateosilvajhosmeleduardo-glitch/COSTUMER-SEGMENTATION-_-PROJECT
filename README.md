@@ -1,28 +1,30 @@
 # Credit Card Customer Segmentation
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Unsupervised%20Learning-orange)
-![Status](https://img.shields.io/badge/Status-Portfolio%20Project-success)
+This repository contains a customer segmentation project based on a public credit card customer dataset. The analysis is developed in a Jupyter notebook and focuses on unsupervised learning methods for behavioral segmentation.
 
-This repository presents a complete **data science customer segmentation project** using a public credit card customer dataset. The objective is to identify meaningful behavioral groups using unsupervised learning and to explain the business meaning of each segment.
+## Important note about figures
 
-Unlike a basic clustering notebook, this project includes a structured workflow, detailed interpretations for the main tables and graphs, and a comparison of different unsupervised methods.
+All figures shown in this README were extracted directly from the executed outputs of the notebook:
 
-## Project objective
+`notebooks/credit_card_customer_segmentation.ipynb`
 
-The main goal is to segment credit card customers according to their financial behavior, including balance, purchases, cash advances, payments, credit limit, transaction frequency, and full payment behavior.
+No external, manually redrawn, or invented plots were added to this repository. The complete traceability of each image is available in:
+
+`assets/figures/FIGURE_INDEX.md`
 
 ## Repository structure
 
 ```text
-credit-card-customer-segmentation/
+.
 ├── assets/
-│   ├── figures/          # Main result graphs for GitHub visualization
-│   └── tables/           # Model metrics, cluster profile and data preview
+│   ├── figures/   # PNG figures extracted from the notebook outputs
+│   └── tables/    # Data preview and column summary created from the CSV
 ├── data/
-│   └── Customer_Data.csv # Public dataset used in the analysis
+│   └── Customer_Data.csv
 ├── notebooks/
 │   └── credit_card_customer_segmentation.ipynb
+├── scripts/
+│   └── extract_notebook_figures.py
 ├── src/
 │   └── preprocessing.py
 ├── METHODOLOGY.md
@@ -33,108 +35,89 @@ credit-card-customer-segmentation/
 
 ## Dataset
 
-The dataset contains **8,950 credit card customers** and **18 variables**. It includes behavioral indicators related to purchases, balance, credit limits, payments, cash advances and payment habits.
+The dataset is included in `data/Customer_Data.csv` so the notebook can be executed directly after cloning the repository. A first preview of the data is available in `assets/tables/data_preview_first_10_rows.csv`.
 
-A short data preview is available in [`assets/tables/data_preview.csv`](assets/tables/data_preview.csv), and the full dataset is included in [`data/Customer_Data.csv`](data/Customer_Data.csv) for reproducibility.
+## Methods covered in the notebook
 
-## Methods used
-
-- Exploratory Data Analysis
-- Missing value treatment
-- Feature scaling with `StandardScaler`
+- Exploratory data analysis
+- Missing value inspection and treatment
+- Standardization of numerical variables
 - K-Means clustering
-- Elbow method and silhouette score
-- Principal Component Analysis
+- Elbow method and silhouette analysis
+- Principal Component Analysis for visualization
 - Gaussian Mixture Models
 - Exploratory Factor Analysis
-- Cluster interpretation based on financial behavior
+- Cluster interpretation based on customer behavior
 
-## Main visual results
+## Main figures from the notebook
 
-### Correlation structure
+### Correlation Map Between Variables
 
-The correlation matrix helps identify groups of variables that move together, such as purchases, transaction frequency and payments.
+Extracted from the notebook output where the correlation matrix is plotted with `sns.heatmap`. It summarizes how the numerical variables move together.
 
-![Correlation matrix](assets/figures/01_correlation_matrix.png)
+![Correlation Map Between Variables](assets/figures/01_correlation_map_between_variables.png)
 
-### Key variable distributions
+### Distribution Visualization
 
-The histograms show that several financial variables are highly right-skewed. This is common in customer behavior datasets because a small group of customers tends to concentrate high balances, purchases or cash advances.
+Extracted from the notebook histogram block. It shows the distribution of the project variables.
 
-![Key histograms](assets/figures/02_key_histograms_red.png)
+![Distribution Visualization](assets/figures/03_distribution_visualization_histograms.png)
 
-### Choosing the number of clusters
+### K-Means Validation: Elbow Method
 
-The elbow method and silhouette score are used to support the choice of a three-cluster solution.
+Extracted from the K-Means validation section of the notebook.
 
-![Elbow method](assets/figures/03_elbow_method.png)
+![K-Means Validation: Elbow Method](assets/figures/07_kmeans_validation_elbow_method.png)
 
-![Silhouette scores](assets/figures/04_silhouette_scores.png)
+### K-Means Validation: Silhouette Method
 
-### PCA visualization of K-Means clusters
+Extracted from the K-Means validation section of the notebook.
 
-PCA is used to visualize the customer groups in a lower-dimensional space. The model is trained on standardized variables, and PCA is used mainly for interpretation and visualization.
+![K-Means Validation: Silhouette Method](assets/figures/08_kmeans_validation_silhouette_method.png)
 
-![K-Means PCA segments](assets/figures/05_pca_kmeans_segments.png)
+### K-Means Cluster Distribution
 
-### Behavioral profile of the segments
+Extracted from the final K-Means model section.
 
-The cluster profile summarizes the differences between the customer groups using standardized average values.
+![K-Means Cluster Distribution](assets/figures/09_customer_distribution_by_kmeans_cluster.png)
 
-![Cluster behavioral profile](assets/figures/06_cluster_behavioral_profile.png)
+### PCA Cumulative Variance
 
-### GMM comparison
+Extracted from the PCA section of the notebook.
 
-Gaussian Mixture Models are included as an additional probabilistic clustering approach to compare whether the segmentation pattern remains stable under another method.
+![PCA Cumulative Variance](assets/figures/10_pca_cumulative_variance.png)
 
-![GMM PCA segments](assets/figures/07_pca_gmm_segments.png)
+### K-Means Clusters in 2D PCA
 
-## Main customer segments
+Extracted from the PCA visualization section.
 
-| Cluster | Segment interpretation | Customers | Share |
-|---:|---|---:|---:|
-| 0 | Active purchase customers | 1275 | 14.25% |
-| 1 | Low-activity customers | 6114 | 68.31% |
-| 2 | Cash-advance oriented customers | 1561 | 17.44% |
+![K-Means Clusters in 2D PCA](assets/figures/11_kmeans_clusters_visualized_with_2d_pca.png)
 
+### GMM Component Selection
 
-## Model summary
+Extracted from the Gaussian Mixture Model section.
 
-| Metric | Value |
-|---|---:|
-| Silhouette score (sample=1000) | 0.2402 |
-| Calinski-Harabasz index | 1605.03 |
-| Davies-Bouldin index | 1.592 |
-| PCA variance PC1 | 0.273 |
-| PCA variance PC2 | 0.2031 |
-| PCA variance PC3 | 0.0881 |
-| PCA variance PC1-PC3 | 0.5642 |
+![GMM Component Selection](assets/figures/14_gmm_component_selection_bic.png)
 
+### GMM Clusters in 2D PCA
 
-## How to run the project
+Extracted from the Gaussian Mixture Model section.
 
-1. Clone the repository.
-2. Install dependencies:
+![GMM Clusters in 2D PCA](assets/figures/15_gmm_clusters_visualized_with_2d_pca.png)
+
+## How to run
 
 ```bash
 pip install -r requirements.txt
-```
-
-3. Open the notebook:
-
-```bash
 jupyter notebook notebooks/credit_card_customer_segmentation.ipynb
 ```
 
-4. Run all cells.
+The notebook uses a portable dataset path and looks for the CSV inside the `data/` folder.
 
-The notebook uses a portable path, so it will automatically look for the dataset inside `data/Customer_Data.csv`.
+## Reproducibility
 
-## Notes on originality
-
-This project uses a public dataset, which means other projects may analyze the same data. The originality of this repository comes from the analytical structure, expanded interpretation, methodological comparison, and professional documentation of the results.
+The script `scripts/extract_notebook_figures.py` can be used to re-extract the image outputs from the notebook if the notebook is re-executed.
 
 ## Author
 
-**Jhosmel Mateo**  
-Data Science Portfolio Project
+Jhosmel Mateo
