@@ -1,0 +1,8 @@
+Metric,Value
+Silhouette score (sample=1000),0.2402
+Calinski-Harabasz index,1605.03
+Davies-Bouldin index,1.592
+PCA variance PC1,0.273
+PCA variance PC2,0.2031
+PCA variance PC3,0.0881
+PCA variance PC1-PC3,0.5642
